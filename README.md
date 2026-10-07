@@ -1,6 +1,6 @@
 # Código fuente — Canal de YouTube
 
-Código fuente de los proyectos utilizados en los videos del canal huse360.
+Código fuente de los proyectos utilizados en los videos del canal [huse360](https://www.youtube.com/@huse360).
 
 Cada proyecto corresponde a un video y es independiente de los demás.
 
