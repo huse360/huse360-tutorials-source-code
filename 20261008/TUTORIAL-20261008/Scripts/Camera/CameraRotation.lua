@@ -1,10 +1,22 @@
 -- CameraRotation.lua
 
-require("Scripts/Extensions/math+clamp")
+require("Scripts/Extensions/math+extension")
 
 local CameraRotation = {
     -- Editor-exposed properties
     properties = {
+        {
+            name = "speed",
+            displayName = "Rotation Speed",
+            type = "float",
+            default = 5.0
+        },
+        {
+            name = "distance",
+            displayName = "distance",
+            type = "float",
+            default = 10.0
+        },
         {
             name = "player",
             displayName = "Player",

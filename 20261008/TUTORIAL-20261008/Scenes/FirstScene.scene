@@ -493,6 +493,16 @@ entities:
             className: CameraRotation
             enabled: true
             properties:
+              - name: speed
+                displayName: Rotation Speed
+                type: Float
+                value: 5
+                defaultValue: 5
+              - name: distance
+                displayName: distance
+                type: Float
+                value: 10
+                defaultValue: 10
               - name: player
                 displayName: Player
                 type: EntityReference

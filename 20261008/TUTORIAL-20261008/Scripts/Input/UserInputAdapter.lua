@@ -11,6 +11,8 @@ local UserInputAdapter = {
     }
 }
 
+local KeyboardStick = require("Scripts/Input/KeyboardStick")
+
 function UserInputAdapter:init()
     local entity = Object(self.scene, self.entity)
     if not self.playerCoordinator then
@@ -21,7 +23,7 @@ function UserInputAdapter:init()
     -- 'self.scene' and 'self.entity' are provided by the engine
     RegisterEngineEvent(self, "onUpdate")
     self.move = Vector3(0,0,0)
-    self.look = Vector2(0,0)
+    self.look = Vector3(0,0,0)
 
     if Input.numGamepads() > 0 then
         self.gamepad = Input.getGamepadId(0)
@@ -29,6 +31,7 @@ function UserInputAdapter:init()
 
     self.buttons = 0
     self.lastButtons = 0
+    self.keyboardStick = KeyboardStick.new(4)
 end
 
 function UserInputAdapter:didPressButtonJump()
@@ -38,8 +41,9 @@ function UserInputAdapter:didPressButtonJump()
 end
 
 function UserInputAdapter:onUpdate()
+    self.keyboardStick:onUpdate()
     self:getGamepadMovement()
-    self:getArrowKeysMovement()
+    self:getKeyboardMovement()
     self.playerCoordinator:move(self.move)
     self.playerCoordinator:look(self.look)
 
@@ -60,19 +64,13 @@ function UserInputAdapter:getGamepadMovement()
     self.move.z = -Input.getGamepadAxis(self.gamepad, Input.GAMEPAD_AXIS_LEFT_Y)
 
     self.look.x = -Input.getGamepadAxis(self.gamepad, Input.GAMEPAD_AXIS_RIGHT_X)
-    self.look.y = -Input.getGamepadAxis(self.gamepad, Input.GAMEPAD_AXIS_RIGHT_Y)
+    self.look.z = -Input.getGamepadAxis(self.gamepad, Input.GAMEPAD_AXIS_RIGHT_Y)
 end
 
-function UserInputAdapter:getArrowKeysMovement()
-    if Input.isKeyPressed(Input.KEY_LEFT) then self.move.x = 1 end
-    if Input.isKeyPressed(Input.KEY_RIGHT) then self.move.x = -1 end
-    if Input.isKeyPressed(Input.KEY_UP) then self.move.z = 1 end
-    if Input.isKeyPressed(Input.KEY_DOWN) then self.move.z = -1 end
-
-    if Input.isKeyPressed(Input.KEY_A) then self.look.x = 1 end
-    if Input.isKeyPressed(Input.KEY_D) then self.look.x = -1 end
-    if Input.isKeyPressed(Input.KEY_W) then self.look.y = 1 end
-    if Input.isKeyPressed(Input.KEY_S) then self.look.y = -1 end
+function UserInputAdapter:getKeyboardMovement()
+    if not self.keyboardStick:didMove() then return end
+    self.move = self.keyboardStick:right()
+    self.look = self.keyboardStick:left()
 end
 
 return UserInputAdapter
