@@ -3,15 +3,26 @@ RelativeMovement.__index = RelativeMovement
 
 function RelativeMovement.new()
     local self = setmetatable({}, RelativeMovement)
-    self.rotation = Quaternion()
     return self
 end
 
-function RelativeMovement:calculate(direction, playerPosition, cameraPosition)
-    if direction:length() < 0.1 then
-        return nil, direction
+function RelativeMovement:calculate(stickDirection, playerPosition, cameraPosition)
+    local stickLeght = stickDirection:length()
+    if stickLeght < 0.01 then
+        return nil, Vector3()
     end
-    return Quaternion.lookRotation(direction), direction
+
+    local forward = playerPosition - cameraPosition
+    forward.y = 0
+
+    local rotation
+        = Quaternion.lookRotation(stickDirection)
+        * Quaternion.lookRotation(forward)
+
+    local movement
+        = rotation * Vector3.UNIT_Z * stickLeght
+       
+    return rotation, movement
 end
 
 return RelativeMovement
