@@ -44,13 +44,14 @@ function PlayerCoordinator:onUpdate()
     self.playerMover:onMove(self.playerDirection)
 end
 
-function PlayerCoordinator:move(direction)
-    local rotation, movement =
-        self.relativeMovement:calculate(
-            direction,
-            self.playerObject.position,
-            self.cameraObject.position
-        )
+function PlayerCoordinator:move(stickDirection)
+    local
+    rotation, movement =
+    self.relativeMovement:calculate(
+        stickDirection,
+        self.playerObject.position,
+        self.cameraObject.position
+    )
 
     self.playerRotation = rotation
     self.playerDirection = movement
@@ -60,8 +61,8 @@ function PlayerCoordinator:jump()
     self.playerMover:onJump()
 end
 
-function PlayerCoordinator:look(direction)
-    self.cameraRotation:onLook(direction)
+function PlayerCoordinator:look(stickDirection)
+    self.cameraRotation:onLook(stickDirection)
 end
 
 return PlayerCoordinator

@@ -7,11 +7,11 @@ function RelativeMovement.new()
     return self
 end
 
-function RelativeMovement:calculate(direction, playerPosition, cameraPosition)
-    if direction:length() < 0.1 then
-        return nil, direction
+function RelativeMovement:calculate(stickDirection, playerPosition, cameraPosition)
+    if stickDirection:length() < 0.01 then
+        return nil, stickDirection
     end
-    return Quaternion.lookRotation(direction), direction
+    return Quaternion.lookRotation(stickDirection), stickDirection
 end
 
 return RelativeMovement
