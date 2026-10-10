@@ -45,7 +45,7 @@ function CameraRotation:onPostUpdate()
     self.camera.target = self.player.position
 end
 
-function CameraRotation:onLook(direction)
+function CameraRotation:onLook(stickDirection)
 
 end
 
