@@ -1,0 +1,14 @@
+name: TUTORIAL-20261018-jump
+canvasWidth: 1280
+canvasHeight: 720
+scalingMode: fitwidth
+textureStrategy: resize
+vsync: true
+windowMode: fullscreen
+windowWidth: 1280
+windowHeight: 720
+windowResizable: true
+luaDir: .
+startSceneId: 4280014112
+scenes:
+  - filepath: Scenes/FirstScene.scene
