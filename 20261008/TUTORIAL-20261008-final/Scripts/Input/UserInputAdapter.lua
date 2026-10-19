@@ -35,9 +35,12 @@ function UserInputAdapter:init()
 end
 
 function UserInputAdapter:didPressButtonJump()
+    if not self.gamepad then return Input.isKeyPressed(Input.KEY_SPACE) end
+
     return
-      Input.isGamepadButtonPressed(self.gamepad, Input.GAMEPAD_BUTTON_A)
-      or Input.isKeyPressed(Input.KEY_SPACE)
+    Input.isGamepadButtonPressed(self.gamepad, Input.GAMEPAD_BUTTON_A)
+    or
+    Input.isKeyPressed(Input.KEY_SPACE)
 end
 
 function UserInputAdapter:onUpdate()
@@ -68,9 +71,21 @@ function UserInputAdapter:getGamepadMovement()
 end
 
 function UserInputAdapter:getKeyboardMovement()
-    if not self.keyboardStick:didMove() then return end
+    if not self.keyboardStick:didMove() then
+        if not self.gamepad then
+            self:clearMoveAndLook()
+        end
+        return
+    end
     self.move = self.keyboardStick:right()
     self.look = self.keyboardStick:left()
+end
+
+function UserInputAdapter:clearMoveAndLook()
+    self.move.x = 0
+    self.move.z = 0
+    self.look.x = 0
+    self.look.z = 0
 end
 
 return UserInputAdapter
